@@ -41,25 +41,66 @@ spline / line / bar**) и собственным тултипом в стиле 
 
 ### Backend
 
+**Windows (Git Bash):**
+
 ```bash
 cd backend
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+
+python -m venv .venv
+source .venv/Scripts/activate
+
 pip install -r requirements.txt
 cp .env.example .env
+
 python manage.py migrate
 python manage.py runserver 8000
 ```
 
-По умолчанию (`.env.example`) backend работает на SQLite — база `db.sqlite3`
-создастся автоматически.
+**Windows (PowerShell):**
 
-### Frontend
+```powershell
+cd backend
+
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+Copy-Item .env.example .env
+
+python manage.py migrate
+python manage.py runserver 8000
+```
+
+**Linux / macOS:**
+
+```bash
+cd backend
+
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+cp .env.example .env
+
+python manage.py migrate
+python manage.py runserver 8000
+```
+
+По умолчанию (`.env.example`) backend работает на SQLite — база `db.sqlite3` создастся автоматически.
+
+### Frontend (Запускаем одновременно с backend, но только это в отдельном терминале)
+
+В отдельном терминале:
 
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
+Откройте http://localhost:5173 — Vite проксирует запросы `/api/*` на Django backend (`http://localhost:8000`) через `vite.config.js`.
+
+
 
 Откройте http://localhost:5173 — Vite сам проксирует запросы `/api/*` на
 `http://localhost:8000` (см. `vite.config.js`).
@@ -149,4 +190,5 @@ const series = [
 Кнопка **«Случайные данные»** в интерфейсе бьёт в `POST /datasets/random/` и
 сразу отрисовывает результат — не нужно ничего готовить заранее, чтобы
 проверить работу графика.
+
 
