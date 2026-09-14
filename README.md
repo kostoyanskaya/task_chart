@@ -36,65 +36,6 @@ spline / line / bar**) и собственным тултипом в стиле 
 
 ---
 
-## Структура проекта
-
-```
-testtask/
-├── docker-compose.yml
-├── backend/
-│   ├── core/                # настройки Django, urls, wsgi/asgi
-│   ├── chartdata/           # приложение: модели, сериализаторы, вьюхи, парсинг файлов
-│   │   ├── models.py        # Dataset → Series → DataPoint
-│   │   ├── views.py         # /api/datasets/... эндпоинты
-│   │   ├── utils.py         # генератор случайных данных + парсер CSV/Excel
-│   ├── requirements.txt
-│   └── Dockerfile
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Chart.jsx         # обёртка над ECharts (area/spline/line/bar)
-│   │   │   ├── ManualEntry.jsx   # ручной ввод таблицей
-│   │   │   └── UploadPanel.jsx   # drag&drop загрузка CSV/Excel
-│   │   ├── api.js           # клиент REST API
-│   │   └── App.jsx
-│   ├── nginx.conf
-│   └── Dockerfile
-└── docs/
-    └── chart-reference.jpg
-```
-
----
-
-## Быстрый старт через Docker (рекомендуется)
-
-Требуется только Docker и docker-compose.
-
-```bash
-cd testtask
-docker compose up --build
-```
-
-После сборки:
-
-- **Фронтенд:** http://localhost/
-- **API:** http://localhost/api/datasets/
-- **Админка Django:** http://localhost/admin/
-
-Первый запуск сам накатит миграции и соберёт статику (см. `command:` в
-`docker-compose.yml`). Чтобы зайти в админку, создайте суперпользователя:
-
-```bash
-docker compose exec backend python manage.py createsuperuser
-```
-
-Остановить и снести всё вместе с данными БД:
-
-```bash
-docker compose down -v
-```
-
----
-
 ## Локальная разработка без Docker
 
 ### Backend
@@ -132,7 +73,6 @@ npm run dev
 |-------|---------------------------|----------|
 | GET   | `/datasets/`               | Список сохранённых датасетов |
 | GET   | `/datasets/<id>/`           | Датасет со всеми сериями и точками |
-| DELETE| `/datasets/<id>/`           | Удалить датасет |
 | POST  | `/datasets/manual/`         | Создать датасет из JSON (ручной ввод) |
 | POST  | `/datasets/random/`         | Сгенерировать случайный датасет из 4 серий. Тело: `{"days": 14}` |
 | POST  | `/datasets/upload/`         | Загрузить CSV/Excel, `multipart/form-data`, поле `file` |
@@ -208,3 +148,4 @@ const series = [
 Кнопка **«Случайные данные»** в интерфейсе бьёт в `POST /datasets/random/` и
 сразу отрисовывает результат — не нужно ничего готовить заранее, чтобы
 проверить работу графика.
+
