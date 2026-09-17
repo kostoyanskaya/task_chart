@@ -153,36 +153,6 @@ date,Cost,CPA,ROI confirmed,Conversions
 2026-06-04,44.36,1.23,161.47,36
 ```
 
----
-
-## Инициализация графика вручную (если нужно встроить `Chart.jsx` в другой проект)
-
-```jsx
-import MultiSeriesChart from "./components/Chart.jsx";
-
-const series = [
-  { name: "Cost", type: "area", color: "#F2D675", unit: "",
-    points: [{ date: "12.06", value: 44.36 }, /* ... */] },
-  { name: "CPA", type: "spline", color: "#4C8DFF", unit: "",
-    points: [{ date: "12.06", value: 1.23 }, /* ... */] },
-  { name: "ROI confirmed", type: "line", color: "#34C77B", unit: "",
-    points: [{ date: "12.06", value: 161.47 }, /* ... */] },
-  { name: "Conversions", type: "bar", color: "#B26BFF", unit: "",
-    points: [{ date: "12.06", value: 36 }, /* ... */] },
-];
-
-<MultiSeriesChart series={series} height={420} />
-```
-
-Требования к `series`: массив из 1–4 объектов, у всех **одинаковое количество
-точек** и **одинаковые даты по порядку** (ось X строится по `points` первой
-серии). `type` определяет визуальное поведение.
-Каждая серия рисуется на собственной скрытой оси Y (`scale: true`), поэтому
-разномасштабные метрики (стоимость в десятках, ROI в сотнях, CPA в единицах)
-не «расплющивают» друг друга на одном холсте — как на референсе.
-
----
-
 ## Тестовые данные
 
 Кнопка **«Случайные данные»** в интерфейсе бьёт в `POST /datasets/random/` и
